@@ -1,7 +1,11 @@
-const objetoA: object = {
+const objetoA: {
+    readonly chaveA: string;
+    chaveB: string;
+} = {
     chaveA: 'Valor A',
     chaveB: 'Valor B',
 };
 
-objetoA.chaveA = 'Outro valor';
-objetoA.chaveC = 'Nova chave';
+objetoA.chaveB = 'Outro valor';
+
+console.log(objetoA);
