@@ -1,5 +1,4 @@
 // Tipo tuple
-
 const dadosCliente1: [number, string] = [1, 'Luiz'];
 const dadosCliente2: [number, string, string] = [1, 'Luiz', 'Miranda'];
 const dadosCliente3: [number, string, string?] = [1, 'Luiz'];
