@@ -1,7 +1,8 @@
 {
     "name": "ts",
     "scripts": {
-        "dev": "npx webpack -w"
+        "build:frontend": "webpack -w",
+        "build:backend": "tsc"
     },
     "packageManager": "yarn@4.9.2",
     "devDependencies": {
