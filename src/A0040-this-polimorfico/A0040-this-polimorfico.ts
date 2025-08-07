@@ -42,8 +42,16 @@ export class RequestBuilder {
         return this;
     }
 
-    setUrl(url: 'get' | 'post'): this {
+    setUrl(url: string): this {
         this.url = url;
         return this;
     }
+
+    send(): void {
+        console.log(`Enviando dados via ${this.method} para ${this.url}`);
+    }
 }
+
+const request = new RequestBuilder(); // Builder
+request.setUrl('http://www.google.com');
+request.setMethod('post').send;
