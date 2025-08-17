@@ -1,4 +1,13 @@
-function decorator(classPrototype: {});
+function decorador(classPrototype: any, nomeMetodo: string, descriptor: PropertyDescriptor): PropertyDescriptor | void {
+    console.log(classPrototype);
+    console.log(nomeMetodo);
+    console.log(descriptor);
+    return {
+        value: function (...args: string[]) {
+            return args[0].toUpperCase();
+        },
+    };
+}
 
 export class UmaPessoa {
     nome: string;
@@ -28,3 +37,7 @@ export class UmaPessoa {
         this.sobrenome = palavras.join(' ');
     }
 }
+
+const pessoa = new UmaPessoa('Luiz', 'Otávio', 30);
+const metodo = pessoa.metodo('Olá mundo!');
+console.log(metodo);
