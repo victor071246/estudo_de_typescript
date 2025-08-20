@@ -14,7 +14,4 @@ namespace MeuNamespace {
     }
 }
 
-const pessoaDoNamespace = new MeuNamespace.PessoaDoNamespace('Luiz');
-console.log(pessoaDoNamespace);
-console.log(MeuNamespace.nomeDoNamespace);
-console.log(MeuNamespace.OutroNamespace.nomeDoNamespace);
+const constDoNamespace = 'Valor da const do namespace';
