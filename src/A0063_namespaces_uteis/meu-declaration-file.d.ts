@@ -4,3 +4,9 @@ declare namespace _ {
         bla: string;
     }
 }
+
+declare namespace NodeJS {
+    interface global {
+        MINHAGLOBAL: string;
+    }
+}
