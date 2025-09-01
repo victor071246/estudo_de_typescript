@@ -1,56 +1,54 @@
-interface Produto {
-    id: number;
-    nome: string;
-    preco: number;
+enum Category {
+    STUDY = 'Study',
+    WORK = 'Work',
+    PERSONAL = 'Personal',
+    HEALTH = 'Health',
 }
 
-class Livro implements Produto {
+class User {
     constructor(
         public id: number,
-        public nome: string,
-        public preco: number,
-        public autor: string,
+        public name: string,
+        public email: string,
     ) {}
 }
 
-class Eletronico implements Produto {
+class Task {
     constructor(
         public id: number,
-        public nome: string,
-        public preco: number,
-        public garantia: number,
+        public title: string,
+        public description: string,
+        public category: Category,
+        public assignedTo: User,
+        public completed: boolean = false,
     ) {}
-}
 
-class Carrinho<T extends Produto> {
-    private items: T[] = [];
-
-    adicionar(item: T): void {
-        this.items.push(item);
+    markAsDone() {
+        this.completed = true;
     }
 
-    remover(id: number): void {
-        this.items = this.items.filter((item) => item.id !== id);
-    }
-
-    listar(): T[] {
-        return this.items;
-    }
-
-    total(): number {
-        return this.items.reduce((acc, item) => acc + item.preco, 0);
+    toString(): string {
+        return `[${this.completed ? '✔' : ' '}] ${this.title} - ${
+            this.category
+        } (Assigned to: ${this.assignedTo.name})`;
     }
 }
 
-// --- Teste ---
-const carrinho = new Carrinho<Produto>();
+// ==== Simulação de uso ====
 
-carrinho.adicionar(new Livro(1, 'Clean Code', 120, 'Robert C. Martin'));
-carrinho.adicionar(new Eletronico(2, 'Teclado Mecânico', 250, 24));
+// Criando usuários
+const user1 = new User(1, 'Victor', 'victor@email.com');
+const user2 = new User(2, 'Ana', 'ana@email.com');
 
-console.log(carrinho.listar());
-console.log('Total:', carrinho.total());
+// Criando tarefas
+const tasks: Task[] = [
+    new Task(1, 'Estudar TypeScript', 'Praticar classes e interfaces', Category.STUDY, user1),
+    new Task(2, 'Finalizar relatório', 'Enviar até sexta', Category.WORK, user2),
+    new Task(3, 'Ir à academia', 'Treino de pernas', Category.HEALTH, user1),
+];
 
-carrinho.remover(1);
-console.log('Após remover livro:', carrinho.listar());
-console.log('Total:', carrinho.total());
+// Marcando uma tarefa como concluída
+tasks[0].markAsDone();
+
+// Exibindo todas as tarefas
+tasks.forEach((task) => console.log(task.toString()));
