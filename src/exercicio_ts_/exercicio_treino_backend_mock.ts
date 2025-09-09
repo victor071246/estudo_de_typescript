@@ -83,5 +83,47 @@ class LojaService {
 
     createPedido(itens: { produtoId: number; quantidade: number }[]): Pedido | string {
         let total = 0;
+
+        // Verifica estoque
+        for (const item of itens) {
+            const produto = this.produtoRepo.findById(item.produtoId);
+            if (!produto) return `Produto ${item.produtoId} não encontrado`;
+            if (produto.estoque < item.quantidade) return `Estoque insuficiente para ${produto.nome}`;
+        }
+
+        // Atualiza estoque e calcula total
+        for (const item of itens) {
+            const produto = this.produtoRepo.findById(item.produtoId)!;
+            produto.estoque -= item.quantidade;
+            total += produto.preco * item.quantidade;
+        }
+
+        return this.pedidoRepo.create({ produtos: itens, total });
+    }
+
+    listPedidos(): Pedido[] {
+        return this.pedidoRepo.findAll();
+    }
+
+    getFaturamentoTotal(): number {
+        return this.pedidoRepo.findAll().reduce((sum, p) => sum + p.total, 0);
+    }
+
+    getProdutoMaisVendido(): Produto | null {
+        const vendas: Record<number, number> = {};
+        for (const pedido of this.pedidoRepo.findAll()) {
+            for (const item of pedido.produtos) {
+                vendas[item.produtoId] = (vendas[item.produtoId] || 0) + item.quantidade;
+            }
+        }
+
+        let maisVendidoId: number | null = null;
+        let max = 0;
+        for (const id in vendas {
+            if (vendas[id] > max) {
+                max = vendas[id];
+                maisVendidoId = parseInt(id)
+            }
+        })
     }
 }
